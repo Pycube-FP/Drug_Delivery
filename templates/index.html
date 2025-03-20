@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Delivery System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #01042E;
+            --secondary-color: #4A6CF7;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --danger-color: #EF4444;
+            --background-color: #F3F4F6;
+            --card-background: #FFFFFF;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-buttons a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--card-background);
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            border: 1px solid #E5E7EB;
+            transition: all 0.2s ease;
+        }
+
+        .nav-buttons a:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .form-card {
+            background: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-top: 1.5rem;
+            border: 1px solid #E5E7EB;
+        }
+
+        .form-title {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 1.5rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            transition: all 0.2s;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            background: #020857;
+            transform: translateY(-1px);
+        }
+
+        .success-message {
+            display: none;
+            background: var(--success-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 500;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .required::after {
+            content: "*";
+            color: var(--danger-color);
+            margin-left: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .form-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Medicine Delivery System</h1>
+            <div class="nav-buttons">
+                <a href="/new-delivery"><i class="ri-add-line"></i> New Delivery</a>
+                <a href="/"><i class="ri-dashboard-line"></i> Dashboard</a>
+            </div>
+        </div>
+
+        <div class="form-card">
+            <h2 class="form-title">Create New Delivery</h2>
+            <div id="delivery-form">
+                <div class="form-group">
+                    <label for="patient-name" class="required">Patient Name</label>
+                    <input type="text" id="patient-name" placeholder="Enter patient name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone-number" class="required">Phone Number</label>
+                    <input type="tel" id="phone-number" placeholder="Enter phone number" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email" class="required">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter email address" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address" class="required">Delivery Address</label>
+                    <input type="text" id="address" placeholder="Enter delivery address" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="medicine" class="required">Medicine Details</label>
+                    <input type="text" id="medicine" placeholder="Enter medicine details" required>
+                </div>
+                
+                <button onclick="createDelivery()">
+                    <i class="ri-shopping-cart-line"></i>
+                    Place Order
+                </button>
+            </div>
+        </div>
+
+        <div id="success-message" class="success-message">
+            <i class="ri-check-line"></i>
+            Order placed successfully! Our delivery partner will deliver your medicine soon.
+        </div>
+    </div>
+
+    <script>
+        async function createDelivery() {
+            const data = {
+                patient_name: document.getElementById('patient-name').value,
+                phone_number: document.getElementById('phone-number').value,
+                email: document.getElementById('email').value,
+                address: document.getElementById('address').value,
+                medicine: document.getElementById('medicine').value
+            };
+
+            // Basic validation
+            for (let key in data) {
+                if (!data[key]) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+            }
+
+            try {
+                const response = await fetch('/create_delivery', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                
+                if (result.status === 'created') {
+                    document.getElementById('delivery-form').style.opacity = '0.5';
+                    document.getElementById('success-message').style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 2000);
+                } else {
+                    alert('Error creating delivery: ' + result.message);
+                }
+            } catch (error) {
+                alert('Error creating delivery: ' + error);
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drug Delivery Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #01042E;
+            --secondary-color: #4A6CF7;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --danger-color: #EF4444;
+            --background-color: #F3F4F6;
+            --card-background: #FFFFFF;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #E5E7EB;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+            filter: none;
+        }
+
+        .logo-container {
+            background: white;
+            padding: 8px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-section {
+            margin: 2rem 0;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-btn i {
+            font-size: 1.25rem;
+        }
+
+        .nav-btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .nav-btn-primary:hover {
+            background: #02084A;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(1, 4, 46, 0.15);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #E5E7EB;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-color: var(--primary-color);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-label {
+            color: #6B7280;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-label i {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin: 2rem 0 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title::before {
+            content: "";
+            width: 4px;
+            height: 24px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .delivery-boy-card {
+            background: var(--card-background);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #E5E7EB;
+        }
+
+        .delivery-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .stat-item {
+            background: var(--background-color);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #02084A;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(1, 4, 46, 0.15);
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--primary-color);
+            border: 1px solid #E5E7EB;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-color);
+            background: #F8FAFC;
+            transform: translateY(-2px);
+        }
+
+        .deliveries-table {
+            width: 100%;
+            background: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #E5E7EB;
+            overflow: hidden;
+            white-space: nowrap;
+            overflow-x: auto;
+        }
+
+        .deliveries-table th {
+            padding: 1rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .deliveries-table td, .deliveries-table th {
+            padding: 1.25rem 1.5rem;
+            font-size: 0.938rem;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .status-delivered {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .status-in_progress {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .verification-badges {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .verification-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: #E8F5E9;
+            color: #2E7D32;
+            border: 1px solid rgba(46, 125, 50, 0.1);
+        }
+
+        .verified {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+
+        .not-verified {
+            background: #FFEBEE;
+            color: #C62828;
+            border: 1px solid rgba(198, 40, 40, 0.1);
+        }
+
+        .verification-badge i {
+            font-size: 0.875rem;
+        }
+
+        .medicine-details {
+            color: var(--secondary-color);
+            font-weight: 500;
+            cursor: help;
+        }
+
+        .contact-info {
+            font-size: 0.875rem;
+            line-height: 1.4;
+        }
+
+        .contact-info .email {
+            color: var(--text-secondary);
+            font-size: 0.813rem;
+        }
+
+        .address {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            cursor: help;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .header-left {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .logo {
+                height: 35px;
+            }
+
+            .nav-section {
+                margin: 1.5rem 0;
+            }
+
+            .nav-buttons {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .nav-btn {
+                flex: 1;
+                justify-content: center;
+                min-width: 150px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .deliveries-table {
+                display: block;
+                overflow-x: auto;
+            }
+            .stats-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .medicine-details:hover, .address:hover {
+            position: relative;
+        }
+
+        .medicine-details:hover::after, .address:hover::after {
+            content: attr(title);
+            position: absolute;
+            left: 0;
+            top: 100%;
+            background: var(--card-background);
+            padding: 0.5rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1;
+            white-space: normal;
+            width: max-content;
+            max-width: 300px;
+            font-size: 0.875rem;
+        }
+
+        .deliveries-table td {
+            padding: 0.875rem 1.5rem;
+            color: #374151;
+        }
+
+        .deliveries-table tr:hover {
+            background-color: #F8FAFC;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+
+        .status-delivered {
+            background: #E8F5E9;
+            color: #2E7D32;
+            border: 1px solid rgba(46, 125, 50, 0.1);
+        }
+
+        .medicine-name {
+            color: #4F46E5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .medicine-name:hover {
+            text-decoration: underline;
+        }
+
+        .timestamp {
+            color: #4B5563;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .deliveries-table th:last-child {
+            min-width: 160px;
+            text-align: left;
+        }
+
+        .deliveries-table td:last-child {
+            text-align: left;
+        }
+
+        .timestamp::before {
+            display: none;
+        }
+
+        .delivery-link-card,
+        .delivery-link {
+            display: none;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='Pycube_logo_white.png') }}" alt="Pycube Logo" class="logo">
+                </div>
+                <h1>Drug Delivery Dashboard</h1>
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-buttons">
+                <a href="/new-delivery" class="nav-btn">
+                    <i class="ri-add-line"></i>
+                    New Delivery
+                </a>
+                <a href="/" class="nav-btn">
+                    <i class="ri-dashboard-line"></i>
+                    Dashboard
+                </a>
+                <a href="/delivery-boy" class="nav-btn nav-btn-primary">
+                    <i class="ri-truck-line"></i>
+                    Go to Delivery Dashboard
+                </a>
+            </div>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number">{{ stats[0] }}</div>
+                <div class="stat-label">
+                    <i class="ri-shopping-bag-line"></i>
+                    Total Orders
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ stats[1] }}</div>
+                <div class="stat-label">
+                    <i class="ri-time-line"></i>
+                    Pending
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ stats[5] if stats[5] else 0 }}</div>
+                <div class="stat-label">
+                    <i class="ri-truck-line"></i>
+                    In Progress
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ stats[2] }}</div>
+                <div class="stat-label">
+                    <i class="ri-check-double-line"></i>
+                    Delivered
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ stats[3] }}</div>
+                <div class="stat-label">
+                    <i class="ri-shield-check-line"></i>
+                    OTP Verified
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Recent Deliveries</h2>
+        <table class="deliveries-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Patient Name</th>
+                    <th>Medicine</th>
+                    <th>Status</th>
+                    <th>Verifications</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for delivery in recent_deliveries %}
+                <tr>
+                    <td>{{ delivery['id'] }}</td>
+                    <td>{{ delivery['patient_name'] }}</td>
+                    <td>
+                        <a href="#" class="medicine-name">{{ delivery['medicine'] }}</a>
+                    </td>
+                    <td>
+                        <span class="status-badge status-{{ delivery['status'] }}">
+                            {{ delivery['status'].title() }}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="verification-badges">
+                            <span class="verification-badge {{ 'verified' if delivery['otp_verified'] else 'not-verified' }}">
+                                {% if delivery['otp_verified'] %}
+                                    <i class="ri-shield-check-fill"></i>
+                                {% else %}
+                                    <i class="ri-shield-cross-line"></i>
+                                {% endif %}
+                                OTP
+                            </span>
+                            <span class="verification-badge {{ 'verified' if delivery['phone_verified'] else 'not-verified' }}">
+                                {% if delivery['phone_verified'] %}
+                                    <i class="ri-smartphone-fill"></i>
+                                {% else %}
+                                    <i class="ri-smartphone-line"></i>
+                                {% endif %}
+                                Phone
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="timestamp" data-time="{{ delivery['created_at'] }}">
+                            {{ delivery['created_at'] }}
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+    function formatDateTime(timestamp) {
+        const date = new Date(timestamp);
+        const today = new Date();
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+        
+        // Format time
+        const time = date.toLocaleTimeString('en-US', { 
+            hour: 'numeric', 
+            minute: '2-digit',
+            hour12: true 
+        });
+        
+        // If it's today
+        if (date.toDateString() === today.toDateString()) {
+            return `Today at ${time}`;
+        }
+        // If it's yesterday
+        else if (date.toDateString() === yesterday.toDateString()) {
+            return `Yesterday at ${time}`;
+        }
+        // Otherwise show full date
+        else {
+            const formattedDate = date.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric'
+            });
+            return `${formattedDate} at ${time}`;
+        }
+    }
+
+    // Update all timestamps on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const timestamps = document.querySelectorAll('.timestamp');
+        timestamps.forEach(element => {
+            const originalTime = element.getAttribute('data-time');
+            element.textContent = formatDateTime(originalTime);
+        });
+    });
+    </script>
+</body>
+</html> 
